@@ -52,20 +52,12 @@ multiplesheets <- function(fname) {
 }
 
 # specifying the path name
-fname <- "./cpd_test.xlsx"
+# fname <- "./cpd_test.xlsx"
 
 
 #==============================================================================#
 # merge same sheet into one -----------------------------------------------
 #==============================================================================#
-
-# get the function run
-cols <- multiplesheets(fname) %>% unique()
-
-# create output list
-for (y in seq_along(cols)) {
-  assign(paste0("data_", y), list())
-}
 
 # function
 #' write sheets with same title to one file
@@ -77,6 +69,14 @@ for (y in seq_along(cols)) {
 #'
 #' @examples
 multiplesheets_write <- function(fname) {
+
+  # get the function run
+  cols <- multiplesheets(fname) %>% unique()
+
+  # create output list
+  for (y in seq_along(cols)) {
+    assign(paste0("data_", y), list())
+  }
 
   # getting info about all excel sheets
   sheets <- readxl::excel_sheets(fname)
@@ -99,4 +99,4 @@ multiplesheets_write <- function(fname) {
   }
 }
 
-multiplesheets_write(fname)
+# multiplesheets_write(fname)
