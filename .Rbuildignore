@@ -1,2 +1,4 @@
+^renv$
+^renv\.lock$
 ^rSpliteExcel\.Rproj$
 ^\.Rproj\.user$
