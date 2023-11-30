@@ -1,14 +1,14 @@
-#==============================================================================#
+# ==============================================================================#
 # package -----------------------------------------------------------------
-#==============================================================================#
+# ==============================================================================#
 
 # importing required packages
 library(readxl)
 library(writexl)
 
-#==============================================================================#
+# ==============================================================================#
 # split excel to separate sheet -------------------------------------------
-#==============================================================================#
+# ==============================================================================#
 
 # function
 #' readin excel and sum all sheets
@@ -22,7 +22,6 @@ library(writexl)
 #' library(rSplitExcel)
 #' multiplesheets(fname)
 multiplesheets <- function(fname) {
-
   # getting info about all excel sheets
   sheets <- readxl::excel_sheets(fname)
 
@@ -46,9 +45,9 @@ multiplesheets <- function(fname) {
 # fname <- "./cpd_test.xlsx"
 
 
-#==============================================================================#
+# ==============================================================================#
 # merge same sheet into one -----------------------------------------------
-#==============================================================================#
+# ==============================================================================#
 
 # function
 #' write sheets with same title to one file
@@ -62,7 +61,6 @@ multiplesheets <- function(fname) {
 #' library(rSplitExcel)
 #' multiplesheets_write(fname)
 multiplesheets_write <- function(fname) {
-
   # get the function run
   cols <- multiplesheets(fname) %>% unique()
 
@@ -75,16 +73,23 @@ multiplesheets_write <- function(fname) {
   sheets <- readxl::excel_sheets(fname)
 
   for (x in seq_along(sheets)) {
-    tibble <- readxl::read_excel(fname, sheet = x)%>% as.data.frame()
+    tibble <- readxl::read_excel(fname, sheet = x) %>% as.data.frame()
 
-    if (colnames(tibble)[1] == "...1") {tibble <- readxl::read_excel(fname, sheet = x, skip = 1) %>% as.data.frame()}
+    if (colnames(tibble)[1] == "...1") {
+      tibble <- readxl::read_excel(fname, sheet = x, skip = 1) %>% as.data.frame()
+    }
 
-    match <- lapply(cols, function(z){identical(z, colnames(tibble))}) %>% as.numeric() %>% as.data.frame() %>%
-      rownames_to_column() %>% filter(. == 1) %>% pull(rowname)
+    match <- lapply(cols, function(z) {
+      identical(z, colnames(tibble))
+    }) %>%
+      as.numeric() %>%
+      as.data.frame() %>%
+      rownames_to_column() %>%
+      filter(. == 1) %>%
+      pull(rowname)
 
     # get(paste0("data_", match)) <- list(tibble)
     assign(paste0("data_", match), get(paste0("data_", match)) %>% append(list(tibble)))
-
   }
 
   for (file in seq_along(cols)) {
