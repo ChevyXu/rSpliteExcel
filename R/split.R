@@ -1,12 +1,3 @@
-usethis::create_package(path = "rSplitExcel")
-
-renv::init()
-renv::snapshot()
-usethis::use_package(package = "readxl", type = "Imports")
-usethis::use_package(package = "writexl", type = "Imports")
-
-usethis::use_readme_rmd()
-devtools::document()
 #==============================================================================#
 # package -----------------------------------------------------------------
 #==============================================================================#
@@ -64,10 +55,12 @@ multiplesheets <- function(fname) {
 #'
 #' @param fname
 #'
-#' @return
+#' @return output excels
 #' @export
 #'
 #' @examples
+#' library(rSplitExcel)
+#' multiplesheets_write(fname)
 multiplesheets_write <- function(fname) {
 
   # get the function run
