@@ -1,2 +1,2 @@
 source("renv/activate.R")
-.libPaths("D:/library/")
+# .libPaths("D:/library/")
