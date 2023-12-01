@@ -5,6 +5,7 @@
 # importing required packages
 library(readxl)
 library(writexl)
+library(tidyverse)
 
 # ==============================================================================#
 # split excel to separate sheet -------------------------------------------
@@ -36,14 +37,13 @@ multiplesheets <- function(fname) {
     }
 
     output[x] <- list(colnames(tibble))
-    writexl::write_xlsx(tibble, paste0(sheets[x], ".xlsx"))
+    # writexl::write_xlsx(tibble, paste0(sheets[x], ".xlsx"))
   }
   return(output)
 }
 
 # specifying the path name
 # fname <- "./cpd_test.xlsx"
-
 
 # ==============================================================================#
 # merge same sheet into one -----------------------------------------------
@@ -92,9 +92,9 @@ multiplesheets_write <- function(fname) {
     assign(paste0("data_", match), get(paste0("data_", match)) %>% append(list(tibble)))
   }
 
-  for (file in seq_along(cols)) {
-    writexl::write_xlsx(do.call(rbind, get(paste0("data_", file))), paste0("compound_", file, ".xlsx"))
-  }
+  # for (file in seq_along(cols)) {
+  #   writexl::write_xlsx(do.call(rbind, get(paste0("data_", file))), paste0("compound_", file, ".xlsx"))
+  # }
 }
 
 # multiplesheets_write(fname)
